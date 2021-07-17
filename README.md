@@ -4,4 +4,4 @@ Basic ToDo List Application with CRUD methods
 ### Server
 ### Client
 ## License
-[MIT]()
+[MIT](https://github.com/Andrsrz/code-challenge-todolist/blob/master/LICENSE)
