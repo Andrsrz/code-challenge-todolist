@@ -25,6 +25,9 @@ describe('ToDo Form Component', () => {
 		expect(data.priorities).toContain('Neutral')
 		expect(data.priorities).toContain('Low')
 		expect(data.validationMessage).toContain('Fill out before submit')
+		expect(data.inputTitle).toMatch('')
+		expect(data.inputDescription).toMatch('')
+		expect(data.inputPriority).toMatch('')
 	})
 
 	const modalContainer = wrapper.get('div')
