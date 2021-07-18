@@ -1,0 +1,11 @@
+#todo-form {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;
+}
+
+.form-button {
+	margin-top: 20px;
+}
