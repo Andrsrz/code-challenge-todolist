@@ -6,17 +6,24 @@
 		</header>
 		<form id='todo-form' class='modal-card-body'>
 			<b-field :label='labelTitle' :label-position='labelsPosition'>
-				<b-input type='text' :validatino-message='validationMessage' required></b-input>
+				<b-input type='text' :validatino-message='validationMessage' required v-model='inputTitle'>
+				</b-input>
 			</b-field>
 			<b-field :label='labelDescription' :label-position='labelsPosition'>
-				<b-input type='textarea' :validation-message='validationMessage' required></b-input>
+				<b-input type='textarea' :validation-message='validationMessage' required v-model='inputDescription'>
+				</b-input>
 			</b-field>
 			<b-field :label='labelDueDate' :label-position='labelsPosition'>
-				<b-datepicker :value='date' :validation-message='validationMessage' required></b-datepicker>
+				<b-datepicker v-model='date'
+											:validation-message='validationMessage'
+											required>
+				</b-datepicker>
 			</b-field>
 			<b-field :label='labelPriority' :label-position='labelsPosition'>
-				<b-select :placeholder='selectPlaceholder' :validation-message='validationMessage' required>
-					<option v-for='priority in priorities' :value='priority' :key='priority'>
+				<b-select :placeholder='selectPlaceholder' :validation-message='validationMessage' required v-model='inputPriority'>
+					<option v-for='priority in priorities'
+									:value='priority'
+									:key='priority'>
 						{{ priority }}
 					</option>
 				</b-select>
@@ -47,15 +54,25 @@
 				date: new Date(),
 				selectPlaceholder: 'Select a Priority',
 				priorities: ['High', 'Neutral', 'Low'],
-				validationMessage: 'Fill out before submit'
+				validationMessage: 'Fill out before submit',
+				inputTitle: '',
+				inputDescription: '',
+				inputPriority: ''
 			}
 		},
 		methods: {
 			send(){
-				console.log('send')
+				if(this.validateInputs())
+					console.log('send')
 			},
 			close(){
 				this.$emit('close')
+			},
+			validateInputs(){
+				if(this.inputTitle !== '' && this.inputDescription !== '' && this.inputPriority !== '' && this.date)
+					return true
+				else
+					return false
 			}
 		}
 	}
