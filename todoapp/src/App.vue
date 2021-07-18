@@ -2,18 +2,21 @@
   <div id="app">
     <Home/>
 		<ToDoForm/>
+		<ToDoListForm/>
   </div>
 </template>
 
 <script>
 import Home from './views/Home.vue'
 import ToDoForm from './components/ToDoForm.vue'
+import ToDoListForm from './components/ToDoListForm.vue'
 
 export default {
   name: 'App',
   components: {
     Home,
 		ToDoForm,
+		ToDoListForm
   }
 }
 </script>
