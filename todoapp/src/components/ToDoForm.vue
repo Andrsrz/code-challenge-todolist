@@ -6,16 +6,16 @@
 		</header>
 		<form id='todo-form' class='modal-card-body'>
 			<b-field :label='labelTitle' :label-position='labelsPosition'>
-				<b-input></b-input>
+				<b-input type='text' :validatino-message='validationMessage' required></b-input>
 			</b-field>
 			<b-field :label='labelDescription' :label-position='labelsPosition'>
-				<b-input></b-input>
+				<b-input type='textarea' :validation-message='validationMessage' required></b-input>
 			</b-field>
 			<b-field :label='labelDueDate' :label-position='labelsPosition'>
-				<b-datepicker :value='date'></b-datepicker>
+				<b-datepicker :value='date' :validation-message='validationMessage' required></b-datepicker>
 			</b-field>
 			<b-field :label='labelPriority' :label-position='labelsPosition'>
-				<b-select :placeholder='selectPlaceholder'>
+				<b-select :placeholder='selectPlaceholder' :validation-message='validationMessage' required>
 					<option v-for='priority in priorities' :value='priority' :key='priority'>
 						{{ priority }}
 					</option>
@@ -46,7 +46,8 @@
 				labelsPosition: 'on-border',
 				date: new Date(),
 				selectPlaceholder: 'Select a Priority',
-				priorities: ['High', 'Neutral', 'Low']
+				priorities: ['High', 'Neutral', 'Low'],
+				validationMessage: 'Fill out before submit'
 			}
 		},
 		methods: {
