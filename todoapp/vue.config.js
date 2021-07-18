@@ -1,7 +1,6 @@
-const fs = require('fs')
-
 module.exports = {
 	publicPath: '/',
+	runtimeCompiler: true,
 	chainWebpack: config => {
 		config
 			.plugin('html')
@@ -12,9 +11,6 @@ module.exports = {
 	},
 	css: {
 		loaderOptions: {
-			sass: {
-				additionalData: fs.readFileSync('src/variables.scss', 'utf-8')
-			}
 		}
 	}
 }

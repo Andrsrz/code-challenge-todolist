@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Buefy from 'buefy'
+import './assets/css/main.css'
 import './assets/scss/app.scss'
 
 Vue.use(Buefy)
