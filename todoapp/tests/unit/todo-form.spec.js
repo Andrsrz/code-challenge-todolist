@@ -11,10 +11,12 @@ describe('ToDo Form Component', () => {
 	it('should set the correct default data', () => {
 		const data = wrapper.vm.$data
 		expect(typeof wrapper.vm.$data).toBe('object')
+		expect(data.modalTitle).toMatch('New ToDo')
 		expect(data.labelTitle).toMatch('Title')
 		expect(data.labelDescription).toMatch('Description')
 		expect(data.labelDueDate).toMatch('Due Date')
 		expect(data.labelPriority).toMatch('Priority')
+		expect(data.labelClose).toMatch('Close')
 		expect(data.labelAccept).toMatch('Accept')
 		expect(data.labelsPosition).toMatch('on-border')
 		expect(typeof data.date).toBe('object')
@@ -24,46 +26,68 @@ describe('ToDo Form Component', () => {
 		expect(data.priorities).toContain('Low')
 	})
 
-	const form = wrapper.get('form')
-	it('has a form base section', () => {
-		expect(form).toBeTruthy()
-		expect(form.attributes('id')).toMatch('todo-form')
+	const modalContainer = wrapper.get('div')
+	it('has a modal container', () => {
+		expect(modalContainer.exists()).toBeTruthy()
+		expect(modalContainer.attributes('id')).toMatch('modal-container')
+		expect(modalContainer.attributes('class')).toMatch('modal-card')
 	})
 
-	const inputSection = form.get('#input-section')
-	it('has section for inputs', () => {
-		expect(inputSection).toBeTruthy()
+	const modalHeader = modalContainer.get('header')
+	it('has a modal header', () => {
+		expect(modalHeader.exists()).toBeTruthy()
+		expect(modalHeader.attributes('class')).toMatch('modal-card-head')
+		expect(modalHeader.get('p').attributes('class')).toMatch('modal-card-title')
+		expect(modalHeader.get('p').text()).toMatch('New ToDo')
+		expect(modalHeader.get('button').attributes('class')).toMatch('delete')
+	})
+
+	const form = modalContainer.get('form')
+	it('has a modal body - form', () => {
+		expect(form.exists()).toBeTruthy()
+		expect(form.attributes('id')).toMatch('todo-form')
+		expect(form.attributes('class')).toMatch('modal-card-body')
 	})
 
 	it('has a title input', () => {
-		expect(inputSection.get("[label='Title']"))
-		expect(inputSection.get("[label='Title']").attributes('labelposition')).toMatch('on-border')
-		expect(inputSection.get("[label='Title'] > b-input-stub"))
+		expect(form.get("[label='Title']"))
+		expect(form.get("[label='Title']").attributes('labelposition')).toMatch('on-border')
+		expect(form.get("[label='Title'] > b-input-stub"))
 	})
 
 	it('has a description input', () => {
-		expect(inputSection.get("[label='Description']"))
-		expect(inputSection.get("[label='Description'] > b-input-stub"))
+		expect(form.get("[label='Description']"))
+		expect(form.get("[label='Description'] > b-input-stub"))
 	})
 
 	it('has a due date datepicker', () => {
-		expect(inputSection.get("[label='Due Date']"))
-		expect(inputSection.get("[label='Due Date'] > b-datepicker-stub"))
+		expect(form.get("[label='Due Date']"))
+		expect(form.get("[label='Due Date'] > b-datepicker-stub"))
 	})
 
 	it('has a priority selector', () => {
-		expect(inputSection.get("[label='Priority']"))
-		expect(inputSection.get("[label='Priority'] > b-select-stub"))
+		expect(form.get("[label='Priority']"))
+		expect(form.get("[label='Priority'] > b-select-stub"))
 	})
 
-	const buttonSection = form.get('#button-section')
+	const modalFooter = modalContainer.get('footer')
 	it('has a button section', () => {
-		expect(buttonSection).toBeTruthy()
+		expect(modalFooter.exists()).toBeTruthy()
+		expect(modalFooter.attributes('id')).toMatch('button-section')
+		expect(modalFooter.attributes('class')).toMatch('modal-card-foot')
+	})
+
+	it('has a button to close', () => {
+		const closeButton = modalFooter.get('button')
+		expect(closeButton.exists()).toBeTruthy()
+		expect(closeButton.attributes('type')).toMatch('button')
+		expect(closeButton.attributes('class')).toMatch('button')
+		expect(closeButton.text()).toMatch('Close')
 	})
 
 	it('has a button to accept', () => {
-		const acceptButton = buttonSection.get('b-button-stub')
-		expect(acceptButton).toBeTruthy()
+		const acceptButton = modalFooter.get('b-button-stub')
+		expect(acceptButton.exists()).toBeTruthy()
 		expect(acceptButton.attributes('type')).toMatch('is-success')
 		expect(acceptButton.text()).toMatch('Accept')
 	})

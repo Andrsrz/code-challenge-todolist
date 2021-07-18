@@ -1,6 +1,10 @@
 <template>
-	<form id='todo-form'>
-		<section id='input-section'>
+	<div id='modal-container' class='modal-card' style='width=auto'>
+		<header class='modal-card-head'>
+			<p class='modal-card-title'>{{ modalTitle }}</p>
+			<button class='delete' @click='close()'></button>
+		</header>
+		<form id='todo-form' class='modal-card-body'>
 			<b-field :label='labelTitle' :label-position='labelsPosition'>
 				<b-input></b-input>
 			</b-field>
@@ -17,13 +21,14 @@
 					</option>
 				</b-select>
 			</b-field>
-		</section>
-		<section id='button-section'>
+		</form>
+		<footer id='button-section' class='modal-card-foot'>
+			<button class='button' type='button' @click='close()'>{{ labelClose }}</button>
 			<b-button type='is-success' @click='send()'>
 				{{ labelAccept }}
 			</b-button>
-		</section>
-	</form>
+		</footer>
+	</div>
 </template>
 
 <script lang='js'>
@@ -31,10 +36,12 @@
 		name: 'ToDoForm',
 		data(){
 			return {
+				modalTitle: 'New ToDo',
 				labelTitle: 'Title',
 				labelDescription: 'Description',
 				labelDueDate: 'Due Date',
 				labelPriority: 'Priority',
+				labelClose: 'Close',
 				labelAccept: 'Accept',
 				labelsPosition: 'on-border',
 				date: new Date(),
@@ -45,6 +52,9 @@
 		methods: {
 			send(){
 				console.log('send')
+			},
+			close(){
+				this.$emit('close')
 			}
 		}
 	}
