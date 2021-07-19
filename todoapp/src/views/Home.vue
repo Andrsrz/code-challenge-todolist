@@ -4,10 +4,6 @@
 			<b-button :label='labelButton' type="is-primary" size="is-medium" @click="newToDoList"/>
 		</span>
 		<ToDoListsList/>
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-		<polygon class='svg--sm' fill="skyblue" points="0,0 30,100 65,21 90,100 100,75 100,100 0,100" />
-		<polygon class='svg--lg' fill="skyblue" points="0,0 15,100 33,21 45,100 50,75 55,100 72,20 85,100 95,50 100,80 100,100 0,100" />
-	</svg>
 	</section>
 </template>
 
@@ -49,24 +45,5 @@ export default {
 #button-container {
 	display: flex;
 	justify-content: center;
-}
-
-svg {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 150px;
-}
-
-@media (max-width: 699px) {
-	.svg--lg {
-	display: none;
-	}
-}
-
-@media (min-width: 700px) {
-	.svg--sm {
-	display: none;
-	}
 }
 </style>
