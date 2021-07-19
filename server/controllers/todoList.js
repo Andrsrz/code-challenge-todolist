@@ -3,7 +3,9 @@ const ToDoList = require('../models/todoList.js')
 exports.Create = (req, res) => {
 	const myToDoList = new ToDoList({
 		title: req.body.title,
-		description: req.body.description
+		description: req.body.description,
+		createdOn: new Date,
+		updatedOn: new Date
 	}).save(err => {
 		if(err)
 			return res.status(406).json(err)
@@ -14,8 +16,7 @@ exports.Create = (req, res) => {
 
 exports.GetAll = (req, res) => {
 	ToDoList.find()
-			.populate('title')
-			.sort(['createdOn', 'ascending'])
+			.sort('createdOn')
 			.exec((err, ToDoLists) => {
 				if(err)
 					return res.status(406).json(err)

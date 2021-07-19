@@ -5,7 +5,9 @@ exports.Create = (req, res) => {
 		title: req.body.title,
 		description: req.body.description,
 		dueDate: req.body.dueDate,
-		priority: req.body.priority
+		priority: req.body.priority,
+		createdOn: new Date,
+		updatedOn: new Date
 	}).save(err => {
 		if(err)
 			return res.status(406).json(err)
@@ -17,7 +19,7 @@ exports.Create = (req, res) => {
 exports.GetAll = (req, res) => {
 	ToDo.find({ parent: req.query.parent })
 			.populate('title')
-			.sort(['dueDate', 'ascending'])
+			.sort('dueDate')
 			.exec((err, ToDos) => {
 				if(err)
 					return res.status(406).json(err)
