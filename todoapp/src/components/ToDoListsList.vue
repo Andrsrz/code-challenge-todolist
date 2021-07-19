@@ -32,3 +32,11 @@ export default{
 	mounted(){ this.init() }
 }
 </script>
+
+<style lang='css' scoped>
+#todolists-list {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+</style>
