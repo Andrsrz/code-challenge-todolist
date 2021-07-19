@@ -1,17 +1,16 @@
 <template>
 	<div id="app">
-		<Home/>
+		<router-view></router-view>
 		<PolygonC/>
 	</div>
 </template>
 
 <script>
-import Home from './views/Home.vue'
 import PolygonC from './components/PolygonC.vue'
 
 export default {
 	name: 'App',
-	components: { Home, PolygonC }
+	components: { PolygonC }
 }
 </script>
 
