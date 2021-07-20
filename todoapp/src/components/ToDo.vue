@@ -6,6 +6,10 @@
 			<p>Due Date: {{ todo.dueDate }}</p>
 		</span>
 		<h3>{{ todo.description }}</h3>
+		<span id='button-container'>
+			<b-button type="is-warning">{{ labelButtonEdit }}</b-button>
+			<b-button type="is-danger">{{ labelButtonDelete }}</b-button>
+		</span>
 	</div>
 </template>
 
@@ -15,6 +19,12 @@ import moment from 'moment'
 export default{
 	name: 'ToDo',
 	props: { todo: Object },
+	data(){
+		return{
+			labelButtonEdit: 'Edit',
+			labelButtonDelete: 'Delete'
+		}
+	},
 	methods: {
 		init(){ this.parseDate() },
 		parseDate(){
@@ -63,8 +73,14 @@ export default{
 	justify-content: space-between;
 }
 
+#todo > #button-container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+}
+
 * {
-	margin: 5px;
+	margin: 2.5px;
 	padding: 2.5px;
 }
 </style>

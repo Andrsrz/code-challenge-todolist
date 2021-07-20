@@ -1,10 +1,16 @@
 <template>
-	<div id='todolist' @click='goToDoList(todoList._id)'>
-		<span id='title-container'>
-			<h1>{{ todoList.title }}</h1>
-			<p>Created On: {{ todoList.createdOn }}</p>
+	<div id='todolist'>
+		<div id='info-container' @click='goToDoList(todoList._id)' >
+			<span id='title-container'>
+				<h1>{{ todoList.title }}</h1>
+				<p>Created On: {{ todoList.createdOn }}</p>
+			</span>
+			<h3>{{ todoList.description }}</h3>
+		</div>
+		<span id='button-container'>
+			<b-button type="is-warning">{{ labelButtonEdit }}</b-button>
+			<b-button type="is-danger">{{ labelButtonDelete }}</b-button>
 		</span>
-		<h3>{{ todoList.description }}</h3>
 	</div>
 </template>
 
@@ -15,6 +21,12 @@ export default{
 	name: 'ToDoList',
 	props: {
 		todoList: Object
+	},
+	data(){
+		return{
+			labelButtonEdit: 'Edit',
+			labelButtonDelete: 'Delete'
+		}
 	},
 	methods: {
 		init(){ this.parseDate() },
@@ -41,18 +53,32 @@ export default{
 }
 
 #todolist:hover {
-	cursor: pointer;
 	border: 3px solid skyblue;
 }
 
-#todolist > #title-container {
+#todolist > #info-container {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+#todolist > #info-container > #title-container:hover {
+	cursor: pointer
+}
+
+#todolist > #info-container > #title-container {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
 }
 
+#todolist > #button-container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+}
+
 * {
-	margin: 5px;
+	margin: 2.5px;
 	padding: 2.5px;
 }
 </style>
