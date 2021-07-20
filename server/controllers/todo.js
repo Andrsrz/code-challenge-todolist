@@ -1,7 +1,8 @@
 const ToDo = require('../models/todo.js')
+const ToDoList = require('../models/todoList.js')
 
-exports.Create = (req, res) => {
-	new ToDo({
+exports.Create = async (req, res) => {
+	let myToDo = new ToDo({
 		title: req.body.title,
 		description: req.body.description,
 		dueDate: req.body.dueDate,
@@ -9,16 +10,33 @@ exports.Create = (req, res) => {
 		parent: req.body.parent,
 		createdOn: new Date,
 		updatedOn: new Date
-	}).save(err => {
+	})
+
+	await myToDo.save(err => {
 		if(err)
 			return res.status(406).json(err)
-
-		res.status(201).json({ message: 'ToDo Created' })
 	})
+
+	ToDoList.findById(req.body.parent, (err, todoList) => {
+		if(err)
+			return res.status(404).json(err)
+
+		todoList.todos.push(myToDo._id)
+
+		ToDoList.findByIdAndUpdate(req.body.parent, {
+			todos: todoList.todos,
+			updatedOn: new Date()
+		}, err => {
+			if(err)
+				return res.status(404).json(err)
+		})
+
+		return res.status(201).json({ message: 'ToDo Created' })
+	})
+
 }
 
 exports.GetAll = (req, res) => {
-	console.log(req.query.parent)
 	ToDo.find({ parent: req.query.parent })
 			.sort('dueDate')
 			.exec((err, ToDos) => {
