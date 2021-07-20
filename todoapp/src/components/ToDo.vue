@@ -1,13 +1,13 @@
 <template>
 	<div id='todo' :class='todo.priority'>
 		<b-checkbox v-model='done' type='is-success'></b-checkbox>
-		<span id='title-container'>
+		<span id='title-container' :class='disabled'>
 			<h1>{{ todo.title }}</h1>
 			<p>Due Date: {{ todo.dueDate }}</p>
 		</span>
-		<h3>{{ todo.description }}</h3>
+		<h3 :class='disabled'>{{ todo.description }}</h3>
 		<span id='button-container'>
-			<b-button type='is-warning' @click='editIt()'>{{ labelButtonEdit }}</b-button>
+			<b-button type='is-warning' @click='editIt()' :disabled='done'>{{ labelButtonEdit }}</b-button>
 			<b-button type='is-danger' @click='deleteIt()'>{{ labelButtonDelete }}</b-button>
 		</span>
 	</div>
@@ -23,26 +23,32 @@ export default{
 	data(){
 		return{
 			done: this.todo.done,
+			disabled: '',
 			labelButtonEdit: 'Edit',
 			labelButtonDelete: 'Delete'
 		}
 	},
 	methods: {
-		init(){ this.parseDate() },
+		init(){
+			this.parseDate()
+			this.disabled = this.done ? 'disabled' : ''
+		},
 		parseDate(){
 			this.todo.dueDate = moment(this.todo.dueDate).format('MM/DD/YYYY')
 		},
 		editIt(){
-			this.$buefy.modal.open({
-				parent: this,
-				props: {
-					todo: this.todo,
-					type: 'update'
-				},
-				component: ToDoForm,
-				hasModalCard: true,
-				trapFocus: true
-			})
+			if(!this.done){
+				this.$buefy.modal.open({
+					parent: this,
+					props: {
+						todo: this.todo,
+						type: 'update'
+					},
+					component: ToDoForm,
+					hasModalCard: true,
+					trapFocus: true
+				})
+			}
 		},
 		deleteIt(){
 			fetch(`http://localhost:3000/api/todo/delete?id=${this.todo._id}`, { method: 'DELETE' })
@@ -54,6 +60,7 @@ export default{
 	},
 	watch: {
 		done: function(){
+			this.disabled = this.done ? 'disabled' : ''
 			fetch(`http://localhost:3000/api/todo/done?id=${this.todo._id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
@@ -76,6 +83,11 @@ export default{
 	display: flex;
 	flex-flow: column nowrap;
 	border-radius: 5px;
+}
+
+.disabled {
+	text-decoration: line-through;
+	opacity: 0.4;
 }
 
 .High {
