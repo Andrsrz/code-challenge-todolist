@@ -3,7 +3,7 @@
 		<div id='info-container' @click='goToDoList(todoList._id)' >
 			<span id='title-container'>
 				<h1>{{ todoList.title }}</h1>
-				<p>Created On: {{ todoList.createdOn }}</p>
+				<p>Created On: {{ labelDate }}</p>
 			</span>
 			<h3>{{ todoList.description }}</h3>
 		</div>
@@ -16,6 +16,7 @@
 
 <script lang='js'>
 import ToDoListForm from '../components/ToDoListForm.vue'
+import { EventBus } from '../EventBus.js'
 import moment from 'moment'
 
 export default{
@@ -25,6 +26,7 @@ export default{
 	},
 	data(){
 		return{
+			labelDate: '',
 			labelButtonEdit: 'Edit',
 			labelButtonDelete: 'Delete'
 		}
@@ -33,6 +35,7 @@ export default{
 		init(){ this.parseDate() },
 		parseDate(){
 			this.todoList.createdOn = moment(this.todoList.createdOn).format('MM/DD/YYYY')
+			this.labelDate = moment(this.todoList.createdOn).format('MM/DD/YYYY')
 		},
 		goToDoList(id){
 			this.$router.push({ name: 'ToDoList', params: { id } })
@@ -54,6 +57,7 @@ export default{
 				.then(response => response.json())
 				.then(data => {
 					console.log(data)
+					EventBus.$emit('update-todolists')
 				}).catch(error => { console.error(error) })
 		}
 	},

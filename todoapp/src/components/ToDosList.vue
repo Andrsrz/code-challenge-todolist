@@ -6,6 +6,7 @@
 
 <script lang='js'>
 import ToDo from '../components/ToDo.vue'
+import { EventBus } from '../EventBus.js'
 
 export default{
 	name: 'ToDosList',
@@ -30,7 +31,10 @@ export default{
 				}).catch(error => { console.error(error) })
 		}
 	},
-	created(){ this.init() }
+	created(){
+		this.init()
+		EventBus.$on('update-todo', () => { this.getAll() })
+	}
 }
 </script>
 

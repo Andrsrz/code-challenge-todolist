@@ -24,6 +24,8 @@
 </template>
 
 <script lang='js'>
+	import { EventBus } from '../EventBus.js'
+
 	export default {
 		name: 'ToDoListForm',
 		props: {
@@ -61,7 +63,10 @@
 						})
 					})
 					.then(response => response.json())
-					.then(data => console.log(data))
+					.then(data => {
+						console.log(data)
+						EventBus.$emit('update-todolists')
+					})
 					.catch(error => console.error(error))
 				}else if(this.validateInputs() && this.type == 'update'){
 					fetch(`http://localhost:3000/api/todolist/update?id=${this.todoList._id}`, {
@@ -73,7 +78,10 @@
 						})
 					})
 					.then(response => response.json())
-					.then(data => console.log(data))
+					.then(data => {
+						console.log(data)
+						EventBus.$emit('update-todolists')
+					})
 					.catch(error => console.error(error))
 				}
 			},
