@@ -24,10 +24,12 @@ export default {
 		newToDo() {
 			this.$buefy.modal.open({
 				parent: this,
-				props: { parent: this.parent },
+				props: {
+					parent: this.parent,
+					type: 'create'
+				},
 				component: ToDoForm,
 				hasModalCard: true,
-				customClass: 'custom-class custom-class-2',
 				trapFocus: true
 			})
 		}

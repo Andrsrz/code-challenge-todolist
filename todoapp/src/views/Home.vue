@@ -23,6 +23,7 @@ export default {
 		newToDoList() {
 			this.$buefy.modal.open({
 				parent: this,
+				props: { type: 'create' },
 				component: ToDoListForm,
 				hasModalCard: true,
 				customClass: 'custom-class custom-class-2',

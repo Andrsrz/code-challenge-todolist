@@ -8,13 +8,14 @@
 			<h3>{{ todoList.description }}</h3>
 		</div>
 		<span id='button-container'>
-			<b-button type="is-warning">{{ labelButtonEdit }}</b-button>
-			<b-button type="is-danger">{{ labelButtonDelete }}</b-button>
+			<b-button type='is-warning' @click='editIt()'>{{ labelButtonEdit }}</b-button>
+			<b-button type='is-danger' @click='deleteIt()'>{{ labelButtonDelete }}</b-button>
 		</span>
 	</div>
 </template>
 
 <script lang='js'>
+import ToDoListForm from '../components/ToDoListForm.vue'
 import moment from 'moment'
 
 export default{
@@ -35,6 +36,25 @@ export default{
 		},
 		goToDoList(id){
 			this.$router.push({ name: 'ToDoList', params: { id } })
+		},
+		editIt(){
+			this.$buefy.modal.open({
+				parent: this,
+				props: {
+					todoList: this.todoList,
+					type: 'update'
+				},
+				component: ToDoListForm,
+				hasModalCard: true,
+				trapFocus: true
+			})
+		},
+		deleteIt(){
+			fetch(`http://localhost:3000/api/todolist/delete?id=${this.todoList._id}`, { method: 'DELETE' })
+				.then(response => response.json())
+				.then(data => {
+					console.log(data)
+				}).catch(error => { console.error(error) })
 		}
 	},
 	created(){

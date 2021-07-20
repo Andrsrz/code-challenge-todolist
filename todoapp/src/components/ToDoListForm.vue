@@ -26,6 +26,10 @@
 <script lang='js'>
 	export default {
 		name: 'ToDoListForm',
+		props: {
+			todoList: Object,
+			type: String
+		},
 		data(){
 			return{
 				modalTitle: 'New ToDo List',
@@ -40,10 +44,28 @@
 			}
 		},
 		methods: {
+			init(){
+				if(this.type == 'update'){
+					this.inputTitle = this.todoList.title
+					this.inputDescription = this.todoList.description
+				}
+			},
 			send(){
-				if(this.validateInputs()){
+				if(this.validateInputs() && this.type == 'create'){
 					fetch('http://localhost:3000/api/todolist/create', {
 						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							title: this.inputTitle,
+							description: this.inputDescription
+						})
+					})
+					.then(response => response.json())
+					.then(data => console.log(data))
+					.catch(error => console.error(error))
+				}else if(this.validateInputs() && this.type == 'update'){
+					fetch(`http://localhost:3000/api/todolist/update?id=${this.todoList._id}`, {
+						method: 'PUT',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
 							title: this.inputTitle,
@@ -64,6 +86,7 @@
 				else
 					return false
 			}
-		}
+		},
+		created(){ this.init() }
 	}
 </script>

@@ -1,4 +1,5 @@
 const ToDoList = require('../models/todoList.js')
+const ToDo = require('../models/todo.js')
 
 exports.Create = (req, res) => {
 	new ToDoList({
@@ -35,8 +36,7 @@ exports.GetById = (req, res) => {
 }
 
 exports.Update = (req, res) => {
-	ToDoList.findByIdAndUpdate(req.body.id, {
-		_id: req.body.id,
+	ToDoList.findByIdAndUpdate(req.query.id, {
 		title: req.body.title,
 		description: req.body.description,
 		updatedOn: new Date
@@ -49,9 +49,21 @@ exports.Update = (req, res) => {
 }
 
 exports.Delete = (req, res) => {
-	ToDoList.findByIdAndDelete(req.body.id, err => {
+	ToDoList.findById(req.query.id, (err, todoList) => {
 		if(err)
-			return re.status(406).json(err)
+			return res.status(404).json(err)
+
+		todoList.todos.forEach(todo => {
+			ToDo.findByIdAndDelete(todo, err => {
+				if(err)
+					return res.status(406).json(err)
+			})
+		})
+	})
+
+	ToDoList.findByIdAndDelete(req.query.id, err => {
+		if(err)
+			return res.status(406).json(err)
 
 		return res.status(200).json({ message: 'ToDo List Deleted' })
 	})

@@ -15,6 +15,7 @@
 			</b-field>
 			<b-field :label='labelDueDate' :label-position='labelsPosition'>
 				<b-datepicker v-model='date'
+											:min-datetime='today'
 											:validation-message='validationMessage'
 											required>
 				</b-datepicker>
@@ -41,7 +42,11 @@
 <script lang='js'>
 	export default {
 		name: 'ToDoForm',
-		props: { parent: String },
+		props: {
+			parent: String,
+			todo: Object,
+			type: String
+		},
 		data(){
 			return {
 				modalTitle: 'New ToDo',
@@ -52,6 +57,7 @@
 				labelClose: 'Close',
 				labelAccept: 'Accept',
 				labelsPosition: 'on-border',
+				today: new Date(),
 				date: new Date(),
 				selectPlaceholder: 'Select a Priority',
 				priorities: ['High', 'Neutral', 'Low'],
@@ -62,8 +68,16 @@
 			}
 		},
 		methods: {
+			init(){
+				if(this.type == 'update'){
+					this.inputTitle = this.todo.title
+					this.inputDescription = this.todo.description
+					this.date = new Date(this.todo.dueDate)
+					this.inputPriority = this.todo.priority
+				}
+			},
 			send(){
-				if(this.validateInputs()){
+				if(this.validateInputs() && this.type == 'create'){
 					fetch('http://localhost:3000/api/todo/create', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
@@ -73,6 +87,20 @@
 							dueDate: this.date,
 							priority: this.inputPriority,
 							parent: this.parent
+						})
+					})
+					.then(response => response.json())
+					.then(data => console.log(data))
+					.catch(error => console.error(error))
+				}else if(this.validateInputs() && this.type == 'update'){
+					fetch(`http://localhost:3000/api/todo/update?id=${this.todo._id}`, {
+						method: 'PUT',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							title: this.inputTitle,
+							description: this.inputDescription,
+							dueDate: this.date,
+							priority: this.inputPriority,
 						})
 					})
 					.then(response => response.json())
@@ -89,7 +117,8 @@
 				else
 					return false
 			}
-		}
+		},
+		created(){ this.init() }
 	}
 </script>
 
