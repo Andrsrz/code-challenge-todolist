@@ -1,7 +1,7 @@
 <template>
 	<section id='home'>
 		<span id='button-container'>
-			<b-button :label='labelButton' type="is-primary" size="is-medium" @click="newToDoList"/>
+			<b-button :label='labelButton' type="is-primary" @click="newToDoList"/>
 		</span>
 		<ToDoListsList/>
 	</section>
@@ -36,11 +36,14 @@ export default {
 
 <style lang='css' scoped>
 #home {
-	width: 80%;
-	height: 80%;
+	width: 100%;
+	height: 90%;
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: center;
+	justify-content: flex-start;
+	overflow-y: scroll;
+	padding-top: 5px;
+	padding-bottom: 50px;
 }
 
 #button-container {

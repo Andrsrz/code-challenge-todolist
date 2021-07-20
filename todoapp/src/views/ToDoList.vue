@@ -1,7 +1,9 @@
 <template>
 	<section id='container'>
 		<span id='button-container'>
-			<b-button :label='labelButton' type="is-primary" size="is-medium" @click="newToDo"/>
+			<b-button :label='labelButtonBack' title='Go Back' type='is-primary' @click='goBack()'/>
+			<h1 class='is-size-4' >{{ todoListTitle }}</h1>
+			<b-button :label='labelButton' type="is-primary" @click="newToDo"/>
 		</span>
 		<ToDosList :parent='parent'/>
 	</section>
@@ -16,11 +18,23 @@ export default {
 	components: { ToDosList },
 	data(){
 		return {
+			labelButtonBack: 'Back',
 			labelButton: 'New ToDo',
-			parent: this.$router.currentRoute.params.id
+			parent: this.$router.currentRoute.params.id,
+			todoListTitle: ''
 		}
 	},
 	methods: {
+		init(){ this.getToDoList() },
+		getToDoList(){
+			fetch(`http://localhost:3000/api/todolist/one?id=${this.parent}`, { method: 'GET' })
+				.then(response => response.json())
+				.then(data => {
+					if(data.length !== 0){
+						this.todoListTitle = data.title
+					}
+				}).catch(error => { console.error(error) })
+		},
 		newToDo() {
 			this.$buefy.modal.open({
 				parent: this,
@@ -32,22 +46,29 @@ export default {
 				hasModalCard: true,
 				trapFocus: true
 			})
+		},
+		goBack(){
+			this.$router.go(-1)
 		}
-	}
+	},
+	created(){ this.init() }
 }
 </script>
 
 <style lang='css' scoped>
 #container {
-	width: 80%;
-	height: 80%;
+	width: 100%;
+	height: 90%;
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: center;
+	justify-content: flex-start;
+	overflow-y: scroll;
+	padding-top: 5px;
+	padding-bottom: 50px;
 }
 
 #button-container {
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 }
 </style>

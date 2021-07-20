@@ -6,6 +6,7 @@
 
 <script lang='js'>
 import ToDoList from '../components/ToDoList.vue'
+import { EventBus } from '../EventBus.js'
 
 export default{
 	name: 'ToDoListsList',
@@ -29,7 +30,12 @@ export default{
 				}).catch(error => { console.error(error) })
 		}
 	},
-	created(){ this.init() }
+	created(){
+		this.init()
+		EventBus.$on('update-todolists', () => {
+			this.getAll()
+		})
+	}
 }
 </script>
 

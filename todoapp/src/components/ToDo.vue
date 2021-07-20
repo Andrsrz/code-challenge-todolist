@@ -3,7 +3,7 @@
 		<b-checkbox v-model='done' type='is-success'></b-checkbox>
 		<span id='title-container' :class='disabled'>
 			<h1>{{ todo.title }}</h1>
-			<p>Due Date: {{ todo.dueDate }}</p>
+			<p>Due Date: {{ labelDueDate }}</p>
 		</span>
 		<h3 :class='disabled'>{{ todo.description }}</h3>
 		<span id='button-container'>
@@ -15,6 +15,7 @@
 
 <script lang='js'>
 import ToDoForm from '../components/ToDoForm.vue'
+import { EventBus } from '../EventBus.js'
 import moment from 'moment'
 
 export default{
@@ -24,6 +25,7 @@ export default{
 		return{
 			done: this.todo.done,
 			disabled: '',
+			labelDueDate: '',
 			labelButtonEdit: 'Edit',
 			labelButtonDelete: 'Delete'
 		}
@@ -35,6 +37,7 @@ export default{
 		},
 		parseDate(){
 			this.todo.dueDate = moment(this.todo.dueDate).format('MM/DD/YYYY')
+			this.labelDueDate = moment(this.todo.dueDate).format('MM/DD/YYYY')
 		},
 		editIt(){
 			if(!this.done){
@@ -55,6 +58,7 @@ export default{
 				.then(response => response.json())
 				.then(data => {
 					console.log(data)
+					EventBus.$emit('update-todo')
 				}).catch(error => { console.error(error) })
 		}
 	},
@@ -69,7 +73,10 @@ export default{
 				})
 			})
 			.then(response => response.json())
-			.then(data => console.log(data))
+			.then(data => {
+				console.log(data)
+				EventBus.$emit('update-todo')
+			})
 			.catch(error => console.error(error))
 		}
 	},
