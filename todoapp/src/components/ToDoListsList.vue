@@ -29,7 +29,7 @@ export default{
 				}).catch(error => { console.error(error) })
 		}
 	},
-	mounted(){ this.init() }
+	created(){ this.init() }
 }
 </script>
 
