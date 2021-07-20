@@ -35,8 +35,7 @@ exports.GetById = (req, res) => {
 }
 
 exports.Update = (req, res) => {
-	ToDoList.findByIdAndUpdate(req.body.id, {
-		_id: req.body.id,
+	ToDoList.findByIdAndUpdate(req.query.id, {
 		title: req.body.title,
 		description: req.body.description,
 		updatedOn: new Date
@@ -49,7 +48,7 @@ exports.Update = (req, res) => {
 }
 
 exports.Delete = (req, res) => {
-	ToDoList.findByIdAndDelete(req.body.id, err => {
+	ToDoList.findByIdAndDelete(req.query.id, err => {
 		if(err)
 			return re.status(406).json(err)
 
