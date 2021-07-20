@@ -39,11 +39,14 @@ export default {
 
 <style lang='css' scoped>
 #container {
-	width: 80%;
-	height: 80%;
+	width: 100%;
+	height: 90%;
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: center;
+	justify-content: flex-start;
+	overflow-y: scroll;
+	padding-top: 5px;
+	padding-bottom: 50px;
 }
 
 #button-container {
