@@ -38,9 +38,20 @@ exports.GetById = (req, res) => {
 	})
 }
 
+exports.Done = (req, res) => {
+	ToDo.findByIdAndUpdate(req.query.id, {
+		done: req.body.done,
+		updatedOn: new Date
+	}, err => {
+		if(err)
+			return res.status(406).json(err)
+
+		return res.status(201).json({ message: 'ToDo Done Updated' })
+	})
+}
+
 exports.Update = (req, res) => {
-	ToDo.findByIdAndUpdate(req.body.id, {
-		_id: req.body.id,
+	ToDo.findByIdAndUpdate(req.query.id, {
 		title: req.body.title,
 		description: req.body.description,
 		dueDate: req.body.dueDate,
@@ -55,7 +66,7 @@ exports.Update = (req, res) => {
 }
 
 exports.Delete = (req, res) => {
-	ToDo.findByIdAndDelete(req.body.id, err => {
+	ToDo.findByIdAndDelete(req.query.id, err => {
 		if(err)
 			return re.status(406).json(err)
 
