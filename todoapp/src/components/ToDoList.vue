@@ -1,5 +1,5 @@
 <template>
-	<div id='todolist'>
+	<div id='todolist' @click='goToDoList(todoList._id)'>
 		<span id='title-container'>
 			<h1>{{ todoList.title }}</h1>
 			<p>Created On: {{ todoList.createdOn }}</p>
@@ -20,6 +20,9 @@ export default{
 		init(){ this.parseDate() },
 		parseDate(){
 			this.todoList.createdOn = moment(this.todoList.createdOn).format('MM/DD/YYYY')
+		},
+		goToDoList(id){
+			this.$router.push({ name: 'ToDoList', params: { id } })
 		}
 	},
 	created(){
