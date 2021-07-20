@@ -1,11 +1,12 @@
 const ToDo = require('../models/todo.js')
 
 exports.Create = (req, res) => {
-	const myToDo = new ToDo({
+	new ToDo({
 		title: req.body.title,
 		description: req.body.description,
 		dueDate: req.body.dueDate,
 		priority: req.body.priority,
+		parent: req.body.parent,
 		createdOn: new Date,
 		updatedOn: new Date
 	}).save(err => {
@@ -17,8 +18,8 @@ exports.Create = (req, res) => {
 }
 
 exports.GetAll = (req, res) => {
+	console.log(req.query.parent)
 	ToDo.find({ parent: req.query.parent })
-			.populate('title')
 			.sort('dueDate')
 			.exec((err, ToDos) => {
 				if(err)
