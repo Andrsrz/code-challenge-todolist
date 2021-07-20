@@ -1,7 +1,7 @@
 <template>
 	<section id='home'>
 		<span id='button-container'>
-			<b-button :label='labelButton' type="is-primary" size="is-medium" @click="newToDoList"/>
+			<b-button :label='labelButton' type="is-primary" @click="newToDoList"/>
 		</span>
 		<ToDoListsList/>
 	</section>
