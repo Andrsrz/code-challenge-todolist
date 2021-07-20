@@ -6,7 +6,6 @@ const ToDo = require(path.join(__dirname, '../controllers/todo.js'))
 
 router.post('/create', ToDo.Create)
 router.get('/all', ToDo.GetAll)
-router.get('/one', ToDo.GetById)
 router.put('/done', ToDo.Done)
 router.put('/update', ToDo.Update)
 router.delete('/delete', ToDo.Delete)

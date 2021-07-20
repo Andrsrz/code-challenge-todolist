@@ -29,15 +29,6 @@ exports.GetAll = (req, res) => {
 			})
 }
 
-exports.GetById = (req, res) => {
-	ToDo.findById(req.query.id, (err, todo) => {
-		if(err)
-			return res.status(404).json(err)
-
-		return res.status(200).json(todo)
-	})
-}
-
 exports.Done = (req, res) => {
 	ToDo.findByIdAndUpdate(req.query.id, {
 		done: req.body.done,
