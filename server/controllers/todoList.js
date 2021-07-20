@@ -1,7 +1,7 @@
 const ToDoList = require('../models/todoList.js')
 
 exports.Create = (req, res) => {
-	const myToDoList = new ToDoList({
+	new ToDoList({
 		title: req.body.title,
 		description: req.body.description,
 		createdOn: new Date,

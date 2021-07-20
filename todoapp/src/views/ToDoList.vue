@@ -1,29 +1,31 @@
 <template>
-	<section id='home'>
+	<section id='container'>
 		<span id='button-container'>
-			<b-button :label='labelButton' type="is-primary" size="is-medium" @click="newToDoList"/>
+			<b-button :label='labelButton' type="is-primary" size="is-medium" @click="newToDo"/>
 		</span>
-		<ToDoListsList/>
+		<ToDosList :parent='parent'/>
 	</section>
 </template>
 
 <script lang='js'>
-import ToDoListForm from '../components/ToDoListForm.vue'
-import ToDoListsList from '../components/ToDoListsList.vue'
+import ToDoForm from '../components/ToDoForm.vue'
+import ToDosList from '../components/ToDosList.vue'
 
 export default {
-	name: 'Home',
-	components: { ToDoListsList },
+	name: 'ToDoList',
+	components: { ToDosList },
 	data(){
 		return {
-			labelButton: 'New ToDo List'
+			labelButton: 'New ToDo',
+			parent: this.$router.currentRoute.params.id
 		}
 	},
 	methods: {
-		newToDoList() {
+		newToDo() {
 			this.$buefy.modal.open({
 				parent: this,
-				component: ToDoListForm,
+				props: { parent: this.parent },
+				component: ToDoForm,
 				hasModalCard: true,
 				customClass: 'custom-class custom-class-2',
 				trapFocus: true
@@ -34,7 +36,7 @@ export default {
 </script>
 
 <style lang='css' scoped>
-#home {
+#container {
 	width: 80%;
 	height: 80%;
 	display: flex;

@@ -41,6 +41,7 @@
 <script lang='js'>
 	export default {
 		name: 'ToDoForm',
+		props: { parent: String },
 		data(){
 			return {
 				modalTitle: 'New ToDo',
@@ -62,8 +63,22 @@
 		},
 		methods: {
 			send(){
-				if(this.validateInputs())
-					console.log('send')
+				if(this.validateInputs()){
+					fetch('http://localhost:3000/api/todo/create', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							title: this.inputTitle,
+							description: this.inputDescription,
+							dueDate: this.date,
+							priority: this.inputPriority,
+							parent: this.parent
+						})
+					})
+					.then(response => response.json())
+					.then(data => console.log(data))
+					.catch(error => console.error(error))
+				}
 			},
 			close(){
 				this.$emit('close')

@@ -41,8 +41,19 @@
 		},
 		methods: {
 			send(){
-				if(this.validateInputs())
-					console.log('send')
+				if(this.validateInputs()){
+					fetch('http://localhost:3000/api/todolist/create', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							title: this.inputTitle,
+							description: this.inputDescription
+						})
+					})
+					.then(response => response.json())
+					.then(data => console.log(data))
+					.catch(error => console.error(error))
+				}
 			},
 			close(){
 				this.$emit('close')
