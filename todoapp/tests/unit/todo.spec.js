@@ -75,4 +75,9 @@ describe('ToDo Component', () => {
 		expect(buttonContainer.get('#delete').attributes('type')).toMatch('is-danger')
 		expect(buttonContainer.get('#delete').text()).toMatch('Delete')
 	})
+
+	it('launchs deleteIt method', () => {
+		wrapper.vm.deleteIt()
+		expect(fetch).toBeCalledTimes(1)
+	})
 })
