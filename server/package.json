@@ -6,7 +6,7 @@
   "scripts": {
     "dev:start": "nodemon server.js",
     "start": "node server.js",
-    "test:unit": "jest --verbose --runInBand --detectOpenHandles"
+    "test:unit": "jest --verbose"
   },
   "author": "Andres Ruiz",
   "license": "MIT",
