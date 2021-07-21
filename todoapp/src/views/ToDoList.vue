@@ -1,9 +1,9 @@
 <template>
 	<section id='container'>
 		<span id='button-container'>
-			<b-button :label='labelButtonBack' title='Go Back' type='is-primary' @click='goBack()'/>
+			<b-button id='goback' :label='labelButtonBack' title='Go Back' type='is-primary' @click='goBack()'/>
 			<h1 class='is-size-4' >{{ todoListTitle }}</h1>
-			<b-button :label='labelButton' type="is-primary" @click="newToDo"/>
+			<b-button id='todo' :label='labelButton' type="is-primary" @click="newToDo"/>
 		</span>
 		<ToDosList :parent='parent'/>
 	</section>
