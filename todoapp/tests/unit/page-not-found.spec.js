@@ -13,9 +13,9 @@ describe('PageNotFound Component', () => {
 		expect(wrapper.get('#page-not-found')).toBeTruthy();
 	});
 
-	const data = PageNotFound.data();
+	const data = wrapper.vm.$data;
 	it('Should set the default data', () => {
-		expect(typeof PageNotFound.data).toBe('function');
+		expect(typeof wrapper.vm.$data).toBe('object');
 		expect(data.title).toMatch('Page Not Found');
 		expect(data.labelButton).toMatch('Go Back');
 	});
