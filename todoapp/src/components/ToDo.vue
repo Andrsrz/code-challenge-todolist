@@ -7,8 +7,8 @@
 		</span>
 		<h3 :class='disabled'>{{ todo.description }}</h3>
 		<span id='button-container'>
-			<b-button type='is-warning' @click='editIt()' :disabled='done'>{{ labelButtonEdit }}</b-button>
-			<b-button type='is-danger' @click='deleteIt()'>{{ labelButtonDelete }}</b-button>
+			<b-button id='edit' type='is-warning' @click='editIt()' :disabled='done'>{{ labelButtonEdit }}</b-button>
+			<b-button id='delete' type='is-danger' @click='deleteIt()'>{{ labelButtonDelete }}</b-button>
 		</span>
 	</div>
 </template>
