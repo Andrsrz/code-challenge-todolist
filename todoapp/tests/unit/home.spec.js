@@ -9,7 +9,7 @@ localVue.use(Buefy)
 
 const wrapper = shallowMount(Home, { router, localVue })
 
-describe('Home Component', () => {
+describe('Home View', () => {
 	it('renders a main div container', () => {
 		expect(wrapper.get('#home').exists()).toBe(true)
 	})

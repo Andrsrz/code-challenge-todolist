@@ -8,7 +8,7 @@ localVue.use(Buefy)
 
 const wrapper = shallowMount(PageNotFound, { router, localVue })
 
-describe('PageNotFound Component', () => {
+describe('PageNotFound View', () => {
 	it('Renders a main div container', () => {
 		expect(wrapper.get('#page-not-found')).toBeTruthy()
 	})
