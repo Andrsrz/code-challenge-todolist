@@ -8,8 +8,8 @@
 			<h3>{{ todoList.description }}</h3>
 		</div>
 		<span id='button-container'>
-			<b-button type='is-warning' @click='editIt()'>{{ labelButtonEdit }}</b-button>
-			<b-button type='is-danger' @click='deleteIt()'>{{ labelButtonDelete }}</b-button>
+			<b-button id='edit' type='is-warning' @click='editIt()'>{{ labelButtonEdit }}</b-button>
+			<b-button id='delete' type='is-danger' @click='deleteIt()'>{{ labelButtonDelete }}</b-button>
 		</span>
 	</div>
 </template>
