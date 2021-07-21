@@ -39,6 +39,7 @@ npm run dev:start
 npm run start
 ```
 ### Run your unit tests
+## Before, get up and running the DataBase! You need it to test the API endpoints
 ```sh
 npm run test:unit
 ```
